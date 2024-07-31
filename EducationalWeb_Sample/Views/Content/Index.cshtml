@@ -1,0 +1,103 @@
+﻿@model CourseModel
+
+<!--Post Loop-->
+<section class="post-loop py-3 mb-3 contentpage-main">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="content-holder">
+                    @* <img class="rounded img-fluid mb-3" src="https://th.bing.com/th/id/R.b06a743822ee40e0d7f42397c03d965e?rik=dcpK%2f8uKXxWbNQ&pid=ImgRaw&r=0" alt="" /> *@
+                    <div class="post-content mb-3">
+                        <form action="/Content/AddContent" method="post">
+                            <div class="row">
+                                <div class="mb-2 col-md-9">
+                                    <input type="text" class="form-control form-text @(ViewBag.IsInvalid == true ? "is-invalid" : "")" placeholder="Title" name="Title" required />
+                                    @if (Model != null)
+                                    {
+                                        <span class="text-danger">@Html.ValidationMessageFor(Model => Model.Title)</span>
+                                    }
+                                </div>
+                                <div class="mb-2 col-md-3">
+                                    <input type="number" class="form-control form-text @(ViewBag.IsInvalid == true ? "is-invalid" : "")" placeholder="Price" name="Price" required />
+                                    @if (Model != null)
+                                    {
+                                        <span class="text-danger">@Html.ValidationMessageFor(Model => Model.Price)</span>
+                                    }
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="mb-2">
+                                    <select class="form-select  @(ViewBag.IsInvalid == true ? "is-invalid" : "")" aria-label="Assigned Topic" name="Topic">
+                                        <option value="Technology" selected>Technology</option>
+                                        <option value="Fashion">Coding</option>
+                                        <option value="Modern">Programming</option>
+                                        <option value="Antique">Design</option>
+                                    </select>
+                                    @if (Model != null)
+                                    {
+                                        <span class="text-danger">@Html.ValidationMessageFor(Model => Model.Topic)</span>
+                                    }
+                                </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="mb-2">
+                                    <img src="/img//placeholder.jpg" class="preview-image shadow" alt="Image here" id="uploadedImage" />
+                                    <a href="#" onclick="Educational.CreatePage.UploadImage()" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#image-modal">Upload Image</a>
+                                    <input type="hidden" name="ImageURL" id="imageURL"/>
+                                    @if (Model != null)
+                                    {
+                                        <span class="text-danger">@Html.ValidationMessageFor(Model => Model.ImageURL)</span>
+                                    }
+                                </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="mb-2">
+                                    @* <input type="text" class="form-control form-control-lg" placeholder="Content" name="Content" /> *@
+                                    <label class="form-label" for="Summary">Course Summary</label>
+                                    <textarea class="form-control @(ViewBag.IsInvalid == true ? "is-invalid" : "")" name="Summary" id="Summary" rows="3" required></textarea>
+                                    @if (Model != null)
+                                    {
+                                        <span class="text-danger">@Html.ValidationMessageFor(Model => Model.Summary)</span>
+                                    }
+                                </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="mb-2">
+                                    @* <input type="text" class="form-control form-control-lg" placeholder="Content" name="Content" /> *@
+                                    <label class="form-label" for="Description">Course Description</label>
+                                    <textarea class="form-control @(ViewBag.IsInvalid == true ? "is-invalid" : "")" name="Description" id="Description" rows="10" required></textarea>
+                                    @if (Model != null)
+                                    {
+                                        <span class="text-danger">@Html.ValidationMessageFor(Model => Model.Description)</span>
+                                    }
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="mb-2 text-end">
+                                    <button type="submit" class="btn btn-success col-md-2">Save</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--Post Loop-->
+<!--Model-->
+<div class="modal fade" id="image-modal" data-bs-keyboard="false"
+     tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header text-bg-primary">
+                <h5 class="modal-title">Upload Image</h5>
+                <button class="btn-close btn-close" type="button" data-bs-dismiss="modal" aria-label="Close" id="image-modal-close">
+                </button>
+            </div>
+            <div class="modal-body" id="image-modal-content">
+            </div>
+        </div>
+    </div>
+</div> 
+<script src="/js/createpage.js" asp-append-version="true"></script> 

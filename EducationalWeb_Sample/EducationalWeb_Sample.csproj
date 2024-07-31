@@ -8,6 +8,22 @@
 
   <ItemGroup>
     <PackageReference Include="LibSassBuilder" Version="3.0.0" />
+    <PackageReference Include="Microsoft.TypeScript.MSBuild" Version="5.6.0-beta">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="MySql.Data" Version="9.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ApplicationLayer\Application.csproj" />
+    <ProjectReference Include="..\DomainLayer\Domain.csproj" />
+    <ProjectReference Include="..\InfrastructureLayer\Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\perm\img\" />
+    <Folder Include="wwwroot\temp\img\" />
   </ItemGroup>
 
 </Project>

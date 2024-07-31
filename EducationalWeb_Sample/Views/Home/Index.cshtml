@@ -1,13 +1,15 @@
-﻿<
-
+﻿@model IEnumerable<CourseModel>
+@{
+    CourseModel firstItem = Model.FirstOrDefault()!;
+}
 
 <header class="main-header py-5 border-bottom">
     <div class="container">
         <div class="row align-items-center">
             <div class="col-md-6">
                 <div class="home-header-text-holder pe-md-5">
-                    <h1 class="fs-3 fw-normal">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</h1>
-                    <h2 class="fs-5 fw-light text-secondary">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</h2>
+                    <h1 class="fs-3 fw-normal">@firstItem.Title</h1>
+                    <h2 class="fs-5 fw-light text-secondary">@firstItem.Summary</h2>
                     <a href="#" class="btn btn-sm btn-success mt-2 mb-3 d-inline-flex align-items-center justify-content-center">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-check-fill me-2" viewBox="0 0 16 16">
                             <path fill-rule="evenodd" d="M15.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L12.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0" />
@@ -19,7 +21,7 @@
             </div>
             <div class="col-md-6">
                 <div class="home-header-image-holder">
-                    <img class="rounded img-fluid shadow-sm full-width" src="/img/main-header.jpg" alt="" />
+                    <img class="rounded shadow-sm full-width main-image" src="/perm/img/@firstItem.ImageURL" alt="@firstItem.Title" />
                 </div>
             </div>
         </div>
@@ -81,7 +83,7 @@
                         Lorem ipsum odor amet, consectetuer adipiscing elit. Dignissim habitasse ligula viverra velit nascetur condimentum eros.
                     </h4>
                     <p class="small text-secondary">Lorem ipsum odor amet, consectetuer adipiscing elit. Dignissim habitasse ligula viverra velit nascetur condimentum eros. Fringilla vehicula leo nec imperdiet nullam euismod suscipit.</p>
-                    <a href="courses.html" class="btn btn-sm btn-success d-inline-flex align-items-center justify-content-center">
+                    <a href="/courses" class="btn btn-sm btn-success d-inline-flex align-items-center justify-content-center">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-mortarboard-fill me-2" viewBox="0 0 16 16">
                             <path d="M8.211 2.047a.5.5 0 0 0-.422 0l-7.5 3.5a.5.5 0 0 0 .025.917l7.5 3a.5.5 0 0 0 .372 0L14 7.14V13a1 1 0 0 0-1 1v2h3v-2a1 1 0 0 0-1-1V6.739l.686-.275a.5.5 0 0 0 .025-.917z" />
                             <path d="M4.176 9.032a.5.5 0 0 0-.656.327l-.5 1.7a.5.5 0 0 0 .294.605l4.5 1.8a.5.5 0 0 0 .372 0l4.5-1.8a.5.5 0 0 0 .294-.605l-.5-1.7a.5.5 0 0 0-.656-.327L8 10.466z" />
@@ -132,130 +134,34 @@
                         <span class="badge text-bg-warning rounded-pill">24 Courses Availible</span>
                     </div>
 
-                    <a href="single-course.html" class="list-group-item list-group-item-action">
-                        <div class="row align-items-center g-3">
-                            <div class="col-md-4">
-                                <div class="course-image-holder">
-                                    <img class="rounded img-fluid mb-md-0 mt-md-0 mt-2" src="/img/main-header.jpg" alt="" />
-                                </div>
-                            </div>
-                            <div class="col-md-8">
-                                <h5>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h5>
-                                <p class="text-secondary">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
-                                <p class="d-inline-flex align-items-center">
-                                    <span class="me-2 rounded-pill text-bg-warning px-2 py-1 small d-inline-flex align-items-center">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill me-2" viewBox="0 0 16 16">
-                                            <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
-                                        </svg>
-                                        Rating: 4.7
-                                    </span>
-                                    <span class="rounded-pill text-bg-success px-2 py-1 small">
-                                        Price Rs.499/-
-                                    </span>
-                                </p>
-                            </div>
-                        </div>
-                    </a>
 
-                    <a href="single-course.html" class="list-group-item list-group-item-action">
-                        <div class="row align-items-center g-3">
-                            <div class="col-md-4">
-                                <div class="course-image-holder">
-                                    <img class="rounded img-fluid mb-md-0 mt-md-0 mt-2" src="/img/main-header.jpg" alt="" />
+                    @foreach (CourseModel cmodel in Model)
+                    {
+                        <a href="/Course/@cmodel.Id" class="list-group-item list-group-item-action">
+                            <div class="row align-items-center g-3">
+                                <div class="col-md-4">
+                                    <div class="course-image-holder">
+                                        <img class="rounded mb-md-0 mt-md-0 mt-2 content-image-small" src="/perm/img/@cmodel.ImageURL" alt="" />
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <h5>@cmodel.Title</h5>
+                                    <p class="text-secondary">@cmodel.Summary</p>
+                                    <p class="d-inline-flex align-items-center">
+                                        <span class="me-2 rounded-pill text-bg-warning px-2 py-1 small d-inline-flex align-items-center">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill me-2" viewBox="0 0 16 16">
+                                                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+                                            </svg>
+                                            Rating: @cmodel.Rating
+                                        </span>
+                                        <span class="rounded-pill text-bg-success px-2 py-1 small">
+                                            @String.Format("Price: {0:C}", cmodel.Price)
+                                        </span>
+                                    </p>
                                 </div>
                             </div>
-                            <div class="col-md-8">
-                                <h5>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h5>
-                                <p class="text-secondary">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
-                                <p class="d-inline-flex align-items-center">
-                                    <span class="me-2 rounded-pill text-bg-warning px-2 py-1 small d-inline-flex align-items-center">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill me-2" viewBox="0 0 16 16">
-                                            <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
-                                        </svg>
-                                        Rating: 4.7
-                                    </span>
-                                    <span class="rounded-pill text-bg-success px-2 py-1 small">
-                                        Price Rs.499/-
-                                    </span>
-                                </p>
-                            </div>
-                        </div>
-                    </a>
-
-                    <a href="single-course.html" class="list-group-item list-group-item-action">
-                        <div class="row align-items-center g-3">
-                            <div class="col-md-4">
-                                <div class="course-image-holder">
-                                    <img class="rounded img-fluid mb-md-0 mt-md-0 mt-2" src="/img/main-header.jpg" alt="" />
-                                </div>
-                            </div>
-                            <div class="col-md-8">
-                                <h5>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h5>
-                                <p class="text-secondary">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
-                                <p class="d-inline-flex align-items-center">
-                                    <span class="me-2 rounded-pill text-bg-warning px-2 py-1 small d-inline-flex align-items-center">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill me-2" viewBox="0 0 16 16">
-                                            <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
-                                        </svg>
-                                        Rating: 4.7
-                                    </span>
-                                    <span class="rounded-pill text-bg-success px-2 py-1 small">
-                                        Price Rs.499/-
-                                    </span>
-                                </p>
-                            </div>
-                        </div>
-                    </a>
-
-                    <a href="single-course.html" class="list-group-item list-group-item-action">
-                        <div class="row align-items-center g-3">
-                            <div class="col-md-4">
-                                <div class="course-image-holder">
-                                    <img class="rounded img-fluid mb-md-0 mt-md-0 mt-2" src="/img/main-header.jpg" alt="" />
-                                </div>
-                            </div>
-                            <div class="col-md-8">
-                                <h5>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h5>
-                                <p class="text-secondary">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
-                                <p class="d-inline-flex align-items-center">
-                                    <span class="me-2 rounded-pill text-bg-warning px-2 py-1 small d-inline-flex align-items-center">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill me-2" viewBox="0 0 16 16">
-                                            <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
-                                        </svg>
-                                        Rating: 4.7
-                                    </span>
-                                    <span class="rounded-pill text-bg-success px-2 py-1 small">
-                                        Price Rs.499/-
-                                    </span>
-                                </p>
-                            </div>
-                        </div>
-                    </a>
-
-                    <a href="single-course.html" class="list-group-item list-group-item-action">
-                        <div class="row align-items-center g-3">
-                            <div class="col-md-4">
-                                <div class="course-image-holder">
-                                    <img class="rounded img-fluid mb-md-0 mt-md-0 mt-2" src="/img/main-header.jpg" alt="" />
-                                </div>
-                            </div>
-                            <div class="col-md-8">
-                                <h5>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h5>
-                                <p class="text-secondary">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
-                                <p class="d-inline-flex align-items-center">
-                                    <span class="me-2 rounded-pill text-bg-warning px-2 py-1 small d-inline-flex align-items-center">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill me-2" viewBox="0 0 16 16">
-                                            <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
-                                        </svg>
-                                        Rating: 4.7
-                                    </span>
-                                    <span class="rounded-pill text-bg-success px-2 py-1 small">
-                                        Price Rs.499/-
-                                    </span>
-                                </p>
-                            </div>
-                        </div>
-                    </a>
+                        </a>
+                    }
                 </div>
             </div>
         </div>

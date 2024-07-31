@@ -1,7 +1,14 @@
+using Application;
+using Infrastructure.DataAccessLayer;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+ConnectionStringManager.ConnectionString = builder.Configuration.GetConnectionString("DefaultConnection")!;
+
+builder.Services.AddSingleton<Courses>();
 
 var app = builder.Build();
 
@@ -20,8 +27,12 @@ app.UseRouting();
 
 app.UseAuthorization();
 
+
+
+
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
 
 app.Run();

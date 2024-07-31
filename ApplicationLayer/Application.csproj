@@ -6,4 +6,13 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="MySql.Data" Version="9.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DomainLayer\Domain.csproj" />
+    <ProjectReference Include="..\InfrastructureLayer\Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>

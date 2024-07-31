@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.35004.147
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EducationalWeb_Sample", "EducationalWeb_Sample.csproj", "{770BD520-21D9-448F-9B46-1A7175B5A4AF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EducationalWeb_Sample", "EducationalWeb_Sample.csproj", "{770BD520-21D9-448F-9B46-1A7175B5A4AF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "..\InfrastructureLayer\Infrastructure.csproj", "{6057B783-B9C6-4D76-9F47-FE7BBCE685AB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "..\InfrastructureLayer\Infrastructure.csproj", "{6057B783-B9C6-4D76-9F47-FE7BBCE685AB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "..\ApplicationLayer\Application.csproj", "{B2F566F3-A32C-459C-928D-F9BCC324FC63}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "..\ApplicationLayer\Application.csproj", "{B2F566F3-A32C-459C-928D-F9BCC324FC63}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "..\DomainLayer\Domain.csproj", "{852D7E58-4060-4A1C-AE91-070436EEFFA0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "..\DomainLayer\Domain.csproj", "{852D7E58-4060-4A1C-AE91-070436EEFFA0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApplicationTest", "..\ApplicationTest\ApplicationTest.csproj", "{BD2AD836-865D-451D-B52C-5820872B07DA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{852D7E58-4060-4A1C-AE91-070436EEFFA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{852D7E58-4060-4A1C-AE91-070436EEFFA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{852D7E58-4060-4A1C-AE91-070436EEFFA0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD2AD836-865D-451D-B52C-5820872B07DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD2AD836-865D-451D-B52C-5820872B07DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD2AD836-865D-451D-B52C-5820872B07DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD2AD836-865D-451D-B52C-5820872B07DA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,21 @@
+{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "noImplicitAny": false,
+    "noEmitOnError": true,
+    "removeComments": false,
+    "sourceMap": true,
+    "target": "ES6",
+    "outDir": "js",
+    "lib": [
+      "dom",
+      "ES6"
+    ],
+    "strict": false,
+    "experimentalDecorators": true
+  },
+  "exclude": [
+    "node_modules"
+//    "wwwroot"
+  ]
+}
