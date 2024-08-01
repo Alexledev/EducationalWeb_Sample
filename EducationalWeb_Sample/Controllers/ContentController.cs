@@ -25,6 +25,64 @@ namespace EducationalWeb_Sample.Controllers
             return View();
         }
 
+        [HttpGet("Edit/{id:int:required}")]
+        public async Task<IActionResult> Edit(int id)
+        {
+            try
+            {
+                CourseItem blogItem = (await courseApp.GetItemsByColumn("Id", id))?.SingleOrDefault() ??
+                                                                             throw new ArgumentException("Item doesn't exist");
+
+                CourseModel model = Utilities.CreateObjectBasedOn<CourseItem, CourseModel>(blogItem);
+
+                ViewBag.Id = id;
+
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        
+        [HttpPost("Update/{id:int:required}")]
+        public async Task<IActionResult> UpdateContent(CourseModel model, int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                ViewBag.IsInvalid = true;
+                ViewBag.Id = id;
+                return View("Edit", model);
+            }
+
+            try
+            {
+                CourseItem blogItem = (await courseApp.GetItemsByColumn("Id", id))?.SingleOrDefault() ??
+                                                                             throw new ArgumentException("Item doesn't exist");
+
+                blogItem.Summary = model.Summary.Trim();
+                blogItem.Description = model.Description.Trim();
+                blogItem.Title = model.Title.Trim();
+                blogItem.ImageURL = model.ImageURL.Trim();
+                blogItem.Topic = model.Topic.Trim();
+                blogItem.Price = model.Price;
+
+
+                await courseApp.UpdateData(blogItem, "Id");
+                await CreateFileFromBuffer(blogItem.ImageURL, true);
+
+                // MoveTempImgFile(blogItem.ImageURL);
+
+
+                return Redirect("/Admin");
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+
+        }
+
         private void MoveTempImgFile(string fileName)
         {
             string from = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/temp/img", fileName);
@@ -37,12 +95,20 @@ namespace EducationalWeb_Sample.Controllers
             }
         }
 
-        private async Task CreateFileFromBuffer(string fileName)
+        private async Task CreateFileFromBuffer(string fileName, bool editing=false)
         {
-            if (!memoryCache.TryGetValue(fileName, out byte[] imgBytes))
+            bool cantGetMemCacheValue = !memoryCache.TryGetValue(fileName, out byte[] imgBytes);
+
+            if (editing == true && cantGetMemCacheValue)
+            {
+                return;
+            }
+            
+            if (cantGetMemCacheValue)
             {
                 throw new ArgumentException($"{fileName} was not found");
             }
+
             string to = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/perm/img", fileName);
 
             using (FileStream file = new FileStream(to, FileMode.Create, System.IO.FileAccess.Write))
@@ -69,6 +135,7 @@ namespace EducationalWeb_Sample.Controllers
                 model.Title = model.Title.Trim();
                 model.Summary = model.Summary.Trim();
                 model.Description = model.Description.Trim();
+                model.Topic = model.Topic.Trim();
 
                 CourseItem item = Utilities.CreateObjectBasedOn<CourseModel, CourseItem>(model);
                 item.PostDate = DateTime.UtcNow;
@@ -158,9 +225,6 @@ namespace EducationalWeb_Sample.Controllers
             }
 
         }
-
-
-
 
         [HttpDelete("Delete/{id:int:required}")]
         public async Task<IActionResult> Delete(int id)

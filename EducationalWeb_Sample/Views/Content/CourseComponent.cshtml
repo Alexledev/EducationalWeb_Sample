@@ -1,0 +1,125 @@
+﻿@model CourseModel
+
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    List<string> topicList = ["Technology", "Coding", "Programming", "Design"];
+    IEnumerable<SelectListItem> selectListItems = topicList.Select((topic) => new SelectListItem(topic, topic));
+    string defaultTopic = string.IsNullOrEmpty(Model?.Topic) ? topicList[0] : Model.Topic;
+
+    string actionURL = Model == null ? "AddContent" : $"Update/{Model.Id}";
+}
+
+<!--Post Loop-->
+<section class="post-loop py-3 mb-3 contentpage-main">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="content-holder">
+                    <div class="post-content mb-3">
+                        <form action="/Content/@actionURL" method="post">
+                            <div class="row">
+                                <div class="mb-2 col-md-6">
+                                    <input type="text" class="form-control form-text @(ViewBag.IsInvalid == true ? "is-invalid" : "")" placeholder="Title" name="Title" value="@Model?.Title" required />
+                                    @if (Model != null)
+                                    {
+                                        <span class="text-danger">@Html.ValidationMessageFor(Model => Model.Title)</span>
+                                    }
+                                </div>
+                                <div class="mb-2 col-md-3">
+                                    <input type="number" class="form-control form-text @(ViewBag.IsInvalid == true ? "is-invalid" : "")" placeholder="Price" name="Price" value="@Model?.Price" required />
+                                    @if (Model != null)
+                                    {
+                                        <span class="text-danger">@Html.ValidationMessageFor(Model => Model.Price)</span>
+                                    }
+                                </div>
+                                <div class="mb-2 col-md-3">
+                                    <select asp-for="Topic" asp-items="selectListItems" class="form-select  @(ViewBag.IsInvalid == true ? "is-invalid" : "")" aria-label="Assigned Topic">
+                                    </select>
+
+                                 @*   <select class="form-select  @(ViewBag.IsInvalid == true ? "is-invalid" : "")" aria-label="Assigned Topic" name="Topic">
+                                        @foreach (string option in topicList)
+                                        {
+                                            if (option == defaultTopic)
+                                            {
+                                                <option value="@option" selected>@option</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@option">@option</option>
+                                            }
+                                        }
+                                    </select> *@
+                                    @if (Model != null)
+                                    {
+                                        <span class="text-danger">@Html.ValidationMessageFor(Model => Model.Topic)</span>
+                                    }
+                                </div>
+                            </div>
+                            <div class="row mt-4">
+                                <div class="mb-2 col-md-3">
+                                    @if (string.IsNullOrEmpty(Model?.ImageURL))
+                                    {
+                                        <img src="/img/placeholder.jpg" class="preview-image shadow rounded" alt="Image here" id="uploadedImage" />                                        
+                                    }
+                                    else{
+                                        <img src="/perm/img/@Model?.ImageURL" class="preview-image shadow rounded" alt="Image here" id="uploadedImage" />
+                                    }
+                                    <div>
+                                        <a href="#" onclick="Educational.CreatePage.UploadImage()" class="btn btn-dark mt-1" data-bs-toggle="modal" data-bs-target="#image-modal">Upload Image</a>
+                                        <input type="hidden" name="ImageURL" id="imageURL" value="@Model?.ImageURL" />
+                                        @if (Model != null)
+                                        {
+                                            <span class="text-danger">@Html.ValidationMessageFor(Model => Model.ImageURL)</span>
+                                        }
+                                    </div>
+                                </div>
+                                <div class="mb-2 col-md-9">
+                                    <label class="form-label" for="Summary">Course Summary</label>
+                                    <textarea class="form-control @(ViewBag.IsInvalid == true ? "is-invalid" : "")" name="Summary" id="Summary" rows="4" required>@Model?.Summary</textarea>
+                                    @if (Model != null)
+                                    {
+                                        <span class="text-danger">@Html.ValidationMessageFor(Model => Model.Summary)</span>
+                                    }
+                                </div>
+                            </div>
+                            <div class="row mt-4">
+                                <div class="mb-2">
+                                    <label class="form-label" for="Description">Course Description</label>
+                                    <textarea class="form-control @(ViewBag.IsInvalid == true ? "is-invalid" : "")" name="Description" id="Description" rows="10" required>@Model?.Description</textarea>
+                                    @if (Model != null)
+                                    {
+                                        <span class="text-danger">@Html.ValidationMessageFor(Model => Model.Description)</span>
+                                    }
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="mb-2 text-end">
+                                    <button type="submit" class="btn btn-success col-md-2">Save</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--Post Loop-->
+<!--Model-->
+<div class="modal fade" id="image-modal" data-bs-keyboard="false"
+     tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header text-bg-primary">
+                <h5 class="modal-title">Upload Image</h5>
+                <button class="btn-close btn-close" type="button" data-bs-dismiss="modal" aria-label="Close" id="image-modal-close">
+                </button>
+            </div>
+            <div class="modal-body" id="image-modal-content">
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/js/createpage.js" asp-append-version="true"></script>

@@ -1,8 +1,12 @@
-﻿namespace EducationalWeb_Sample.Models
+﻿
+using System.ComponentModel.DataAnnotations;
+
+namespace EducationalWeb_Sample.Models
 {
     public class CourseModel
     {
         public int Id { get; set; }
+        [Required]
         public string Title { get; set; }
         public string Summary { get; set; }
         public string Description { get; set; }

@@ -23,8 +23,11 @@
 <section class="post-loop py-3 mb-3 admin-section">
     <div class="container">
         <div class="row mb-3">
+            <div class="col">
+                <h2>Manage Courses</h2>
+            </div>
             <div class="col text-end">
-                <a class="btn btn-success w-25" href="/content">Add New Post</a>
+                <a class="btn btn-success w-50" href="/content">Add New Course</a>
             </div>
         </div>
         <div class="row">
@@ -53,7 +56,7 @@
                             </p>
                         </div>
                         <div class="col-md-2">
-                            <a class="btn btn-warning w-75" >Edit</a>
+                            <a class="btn btn-warning w-75" href="/content/edit/@cmodel.Id">Edit</a>
                         </div>
                         <div class="col-md-2">
                             <a onclick="Educational.CreatePage.delete('@cmodel.Title', @cmodel.Id)" class="btn btn-danger w-75" data-bs-toggle="modal" data-bs-target="#course_delete">Delete</a>

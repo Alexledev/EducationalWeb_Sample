@@ -1,7 +1,8 @@
 ﻿@model CourseModel
+@{
+    ViewData["Title"] = "Edit Course";  
+}
 
 @{
-    ViewData["Title"] = "Add New Course";
     await Html.RenderPartialAsync("CourseComponent.cshtml", Model);
-
-}}
+}
