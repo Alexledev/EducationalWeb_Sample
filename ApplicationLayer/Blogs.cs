@@ -13,5 +13,10 @@ namespace Application
         {
 
         }
+
+        public Task<List<BlogItem>> FullTextSearch(string searchText)
+        {
+            return base.FullTextSearchWithColumn("Title", searchText);
+        }
     }
 }

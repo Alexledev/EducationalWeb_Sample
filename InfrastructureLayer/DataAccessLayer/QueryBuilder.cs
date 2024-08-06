@@ -44,6 +44,13 @@ namespace Infrastructure.DataAccessLayer
             return this;
         }
 
+        public QueryBuilder Select(string selectString)
+        {
+         
+            queryString.Append($"SELECT {selectString} ");
+            return this;
+        }
+
         public QueryBuilder From(string tableName)
         {
             queryString.Append($"FROM {tableName} ");

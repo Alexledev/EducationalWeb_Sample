@@ -69,6 +69,46 @@ namespace Infrastructure.DataAccessLayer
             return dataCollection;
         }
 
+        public async Task<(List<T> items, Int64 totalItemCount)> GetCollectionDataWithCount(IQuery queryData, IQuery scalarQuery)
+        {
+            List<T> dataCollection = new List<T>();
+
+            await connection.OpenAsync();
+
+            using (MySqlCommand cmd = new MySqlCommand(queryData.QueryString, connection))
+            {
+                if (!string.IsNullOrEmpty(queryData.WhereConditionColVal.Key))
+                {
+                    cmd.Parameters.AddWithValue($"@{queryData.WhereConditionColVal.Key}", queryData.WhereConditionColVal.Value);
+                }
+
+                using (var reader = await cmd.ExecuteReaderAsync())
+                {
+                    while (await reader.ReadAsync())
+                    {
+                        dataCollection.Add(DataHelpers.CreateValueObject<T>(reader, queryData.SelectedColumns));
+                    }
+                }
+            }
+
+            Int64 totalRowCount = 0;
+
+            using (MySqlCommand cmd = new MySqlCommand(scalarQuery.QueryString, connection))
+            {
+                if (!string.IsNullOrEmpty(queryData.WhereConditionColVal.Key))
+                {
+                    cmd.Parameters.AddWithValue($"@{queryData.WhereConditionColVal.Key}", queryData.WhereConditionColVal.Value);
+                }
+                
+                var rowCount = await cmd.ExecuteScalarAsync();
+                totalRowCount = Convert.ToInt64(rowCount);
+            }
+
+            await connection.CloseAsync();
+
+            return (dataCollection, totalRowCount);
+        }
+
 
         public async Task InsertData<T>(T entity) where T : class, new()
         {

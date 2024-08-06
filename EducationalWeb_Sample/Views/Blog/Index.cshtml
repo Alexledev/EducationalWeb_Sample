@@ -18,6 +18,19 @@
                         </svg>
                         Sign-up to newsletters
                     </a>
+
+                    <div class="col-md-10 my-3 blogs-search-form">
+                        <form class="d-flex" role="search" action="/blog/search" method="get">
+                            <div class="input-group">
+                                <input type="search" class="form-control form-control-sm" placeholder="Search for..." name="keyword" />
+                                <button type="submit" class="btn btn-sm btn-success">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
             <div class="col-md-6">
@@ -36,7 +49,7 @@
                 <div class="list-group small">
                     <div class="list-group-item text-bg-light fw-bold d-flex justify-content-between align-items-center">
                         List of all blog posts
-                        <span class="badge text-bg-warning rounded-pill">24 posts Available</span>
+                        <span class="badge text-bg-warning rounded-pill">@Model.Count() posts Available</span>
                     </div>
 
                     @foreach (BlogModel blogModel in Model)
@@ -69,6 +82,19 @@
                             </div>
                         </a>
                     }
+
+                    <div class="list-group-item text-bg-light fw-bold d-flex justify-content-center">
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination">
+                                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                                @for (int i = 1; i <= ViewBag.pages; i++)
+                                {
+                                    <li class="page-item"><a class="page-link" href="/blog/page/@i">@i</a></li>
+                                }
+                                <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                            </ul>
+                        </nav>
+                    </div>
                 </div>
             </div>
             <div class="col-md-3">

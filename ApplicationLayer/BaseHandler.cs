@@ -27,6 +27,19 @@ namespace Application
 
             return dataHandler.GetCollectionData(queryBuilder);
         }
+
+        public Task<(List<T> items, Int64 totalItemCount)> GetCollectionDataWithCount(int offset = 0, int count = 20, IEnumerable<string> outputColumn = null)
+        {
+            QueryBuilder queryDataBuilder = new QueryBuilder();
+            queryDataBuilder.Select(outputColumn).From(this.TableName).Limit(offset, count);
+
+            QueryBuilder queryScalarBuilder = new QueryBuilder();
+            queryScalarBuilder.Select("COUNT(*)").From(this.TableName);
+
+            return dataHandler.GetCollectionDataWithCount(queryDataBuilder, queryScalarBuilder);
+        }
+
+
         public Task<List<T>> GetDataCollectionOrdered(Dictionary<string, SortOrders> order, int offset = 0, int count = 20, IEnumerable<string> outputColumn = null)
         {
             QueryBuilder queryBuilder = new QueryBuilder();

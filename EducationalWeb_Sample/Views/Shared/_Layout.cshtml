@@ -39,12 +39,24 @@
                         <li class="nav-item">
                             <a href="/Contact" class="nav-link">Contact</a>
                         </li>
-                        <li class="nav-item">
+                        @* <li class="nav-item">
                             <a href="/CourseAdmin" class="nav-link">Admin (Course)</a>
                         </li>
                         <li class="nav-item">
                             <a href="/BlogAdmin" class="nav-link">Admin (Blog)</a>
-                        </li>
+                        </li> *@
+                        @if (this.Context.User.Identity?.IsAuthenticated == true)
+                        {
+                            <li class="dropdown mx-2 mt-1">
+                                <button class="btn btn-sm btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Admin
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item nav-link" href="/CourseAdmin">Course</a></li>
+                                    <li><a class="dropdown-item nav-link" href="/BlogAdmin">Blog</a></li>
+                                </ul>
+                            </li>
+                        }
                     </ul>
                     <div class="ms-auto me-1 d-grid d-md-block gap-2 mb-2 mb-md-0">
                         @if (this.Context.User.Identity?.IsAuthenticated == true)
@@ -82,7 +94,7 @@
                             </a>
                         }
                     </div>
-                    <form class="d-flex" role="search">
+                   @*  <form class="d-flex" role="search">
                         <div class="input-group">
                             <input type="search" class="form-control form-control-sm" placeholder="Search for..." />
                             <button type="submit" class="btn btn-sm btn-success">
@@ -91,7 +103,7 @@
                                 </svg>
                             </button>
                         </div>
-                    </form>
+                    </form> *@
                 </div>
             </div>
         </nav>
