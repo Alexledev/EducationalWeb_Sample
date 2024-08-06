@@ -2,15 +2,17 @@
 using BlogSample.Models;
 using Domain;
 using EducationalWeb_Sample.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EducationalWeb_Sample.Controllers
 {
-    public class AdminController : Controller
+    [Authorize]
+    public class CourseAdminController : Controller
     {
         private readonly Courses courseApp;
 
-        public AdminController(Courses courseApp)
+        public CourseAdminController(Courses courseApp)
         {
             this.courseApp = courseApp;
         }

@@ -1,5 +1,7 @@
 using Application;
+using EducationalWeb_Sample;
 using Infrastructure.DataAccessLayer;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +11,19 @@ builder.Services.AddControllersWithViews();
 ConnectionStringManager.ConnectionString = builder.Configuration.GetConnectionString("DefaultConnection")!;
 
 builder.Services.AddSingleton<Courses>();
+builder.Services.AddSingleton<Blogs>();
+builder.Services.AddSingleton<Users>();
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+.AddCookie(options =>
+{
+    options.Cookie.Name = "_educaweb.auth";
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+    options.SlidingExpiration = true;
+    options.LoginPath = "/user";
+    options.LogoutPath = "/user/logout";
+});
+
 
 var app = builder.Build();
 
@@ -25,10 +40,10 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+//app.UseMiddleware<Authen>();
+
+app.UseAuthentication();
 app.UseAuthorization();
-
-
-
 
 app.MapControllerRoute(
     name: "default",

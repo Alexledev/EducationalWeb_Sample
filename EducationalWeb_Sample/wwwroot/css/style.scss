@@ -62,6 +62,7 @@
 }
 
 .main-image {
-    height: 334px;
-    width: 636px;
+    width: 100%;
+    aspect-ratio: 5 / 3;
+    object-fit: cover;
 }

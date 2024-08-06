@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 var Educational;
 (function (Educational) {
-    class CreatePage {
+    class CreatePageBlog {
         static UploadImage() {
             const content = document.getElementById("image-modal-content");
             content.innerHTML = this.UploadControl();
@@ -108,10 +108,10 @@ var Educational;
             `;
         }
         static delete(name, id) {
-            document.getElementById("course_delete_data").innerHTML = this.deleteControl(name, id);
+            document.getElementById("blog_delete_data").innerHTML = this.deleteControl(name, id);
         }
         static deleteAction(id) {
-            this.deleteItem(`/content/delete/${id}`).then(data => {
+            this.deleteItem(`/blogContent/delete/${id}`).then(data => {
                 this.updateDeleteData(id);
             });
         }
@@ -131,7 +131,7 @@ var Educational;
                 </button>
             </div>
             <div class="modal-footer d-flex justify-content-center">
-                <button type="submit" class="btn btn-sm btn-danger" onclick="Educational.CreatePage.deleteAction(${id})">
+                <button type="submit" class="btn btn-sm btn-danger" onclick="Educational.CreatePageBlog.deleteAction(${id})">
                     Yes
                 </button>
                 <button type="button" href="#" class="btn btn-sm btn-warning" data-bs-dismiss="modal" aria-label="Close">
@@ -155,6 +155,6 @@ var Educational;
             });
         }
     }
-    Educational.CreatePage = CreatePage;
+    Educational.CreatePageBlog = CreatePageBlog;
 })(Educational || (Educational = {}));
-//# sourceMappingURL=createPage.js.map
+//# sourceMappingURL=createPageBlog.js.map

@@ -1,0 +1,64 @@
+﻿@model IEnumerable<BlogModel>
+
+<link href="~/css/admin.css" rel="stylesheet" />
+
+<section class="post-loop py-3 mb-3 admin-section">
+    <div class="container">
+        <div class="row mb-3">
+            <div class="col">
+                <h2>Manage Courses</h2>
+            </div>
+            <div class="col text-end">
+                <a class="btn btn-success w-50" href="/blogContent">Add New Blog</a>
+            </div>
+        </div>
+        <div class="row">
+            @foreach (BlogModel bmodel in Model)
+            {
+
+                <div class="list-group-item list-group-item-action border border-light border-1 rounded shadow my-3" id="r_@bmodel.Id">
+                    <div class="row align-items-center g-3">
+                        <div class="col-md-3">
+                            <div class="course-image-holder">
+                                <img class="rounded mb-md-0 mt-md-0 mt-2 content-image" src="/perm/img/@bmodel.ImageURL" alt="@bmodel.Title" />
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <h5>@bmodel.Title</h5>
+                            <p class="text-secondary">@bmodel.Summary</p>
+                            <p class="d-inline-flex align-items-center">
+                                <span class="badge text-bg-dark rounded-pill me-2">
+                                    <strong>Posted on:</strong>
+                                    <span class="fw-light">@DateOnly.FromDateTime(bmodel.PostDate)</span>
+                                </span>
+                                <span class="badge text-bg-dark rounded-pill me-2">
+                                    <strong>Category:</strong>
+                                    <span class="fw-light">@bmodel.Category</span>
+                                </span>
+                                <span class="badge text-bg-dark rounded-pill me-2">
+                                    <strong>Author:</strong>
+                                    <span class="fw-light">@bmodel.Author</span>
+                                </span>
+                            </p>
+                        </div>
+                        <div class="col-md-2">
+                            <a class="btn btn-warning w-75" href="/BlogContent/edit/@bmodel.Id">Edit</a>
+                        </div>
+                        <div class="col-md-2">
+                            <a onclick="Educational.CreatePageBlog.delete('@bmodel.Title', @bmodel.Id)" class="btn btn-danger w-75" data-bs-toggle="modal" data-bs-target="#blog_delete">Delete</a>
+                        </div>
+
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+<div class="modal fade backdrop-blur" id="blog_delete" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" id="blog_delete_data">
+        </div>
+    </div>
+</div>
+<script src="/js/createPageBlog.js" asp-append-version="true"></script>

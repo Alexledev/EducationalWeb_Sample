@@ -1,11 +1,15 @@
-﻿
+﻿@model IEnumerable<BlogModel>
+@{
+    BlogModel firstItem = Model.FirstOrDefault()!;
+}
+
 <header class="blog-header py-5 border-bottom">
     <div class="container">
         <div class="row align-items-center">
             <div class="col-md-6">
                 <div class="blog-header-text-holder pe-md-5">
-                    <h1 class="fs-3 fw-normal">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</h1>
-                    <h2 class="fs-5 fw-light text-secondary">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</h2>
+                    <h1 class="fs-3 fw-normal">@firstItem.Title</h1>
+                    <h2 class="fs-5 fw-light text-secondary">@firstItem.Summary</h2>
                     <a href="#" class="btn btn-sm btn-success mt-2 mb-3 d-inline-flex align-items-center justify-content-center"
                        data-bs-toggle="modal" data-bs-target="#subscribe_modal">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope-check-fill me-2" viewBox="0 0 16 16">
@@ -18,7 +22,7 @@
             </div>
             <div class="col-md-6">
                 <div class="blog-header-image-holder">
-                    <img class="rounded img-fluid shadow-sm full-width" src="/img/main-header.jpg" alt="" />
+                    <img class="rounded shadow-sm full-width main-image" src="/perm/img/@firstItem.ImageURL" alt="@firstItem.Title" />
                 </div>
             </div>
         </div>
@@ -35,33 +39,36 @@
                         <span class="badge text-bg-warning rounded-pill">24 posts Available</span>
                     </div>
 
-                    <a href="/SinglePost" class="list-group-item list-group-item-action">
-                        <div class="row align-items-center g-3">
-                            <div class="col-md-4">
-                                <div class="course-image-holder">
-                                    <img class="rounded img-fluid mb-md-0 mt-md-0 mt-2" src="/img/main-header.jpg" alt="" />
+                    @foreach (BlogModel blogModel in Model)
+                    {
+                        <a href="/Blog/@blogModel.Id" class="list-group-item list-group-item-action">
+                            <div class="row align-items-center g-3">
+                                <div class="col-md-4">
+                                    <div class="course-image-holder">
+                                        <img class="rounded mb-md-0 mt-md-0 mt-2 content-image-small" src="/perm/img/@blogModel.ImageURL" alt="" />
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <h5>@blogModel.Title</h5>
+                                    <p class="text-secondary">@blogModel.Summary</p>
+                                    <p class="d-inline-flex align-items-center">
+                                        <span class="badge text-bg-dark rounded-pill me-2">
+                                            <strong>Posted on:</strong>
+                                            <span class="fw-light">@DateOnly.FromDateTime(blogModel.PostDate)</span>
+                                        </span>
+                                        <span class="badge text-bg-dark rounded-pill me-2">
+                                            <strong>Category:</strong>
+                                            <span class="fw-light">@blogModel.Category</span>
+                                        </span>
+                                        <span class="badge text-bg-dark rounded-pill me-2">
+                                            <strong>Author:</strong>
+                                            <span class="fw-light">@blogModel.Author</span>
+                                        </span>
+                                    </p>
                                 </div>
                             </div>
-                            <div class="col-md-8">
-                                <h5>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h5>
-                                <p class="text-secondary">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
-                                <p class="d-inline-flex align-items-center">
-                                    <span class="badge text-bg-dark rounded-pill me-2">
-                                        <strong>Posted on:</strong>
-                                        <span class="fw-light">2nd Aug 2022</span>
-                                    </span>
-                                    <span class="badge text-bg-dark rounded-pill me-2">
-                                        <strong>Category:</strong>
-                                        <span class="fw-light">Tech</span>
-                                    </span>
-                                    <span class="badge text-bg-dark rounded-pill me-2">
-                                        <strong>Author:</strong>
-                                        <span class="fw-light">Prime Inspire</span>
-                                    </span>
-                                </p>
-                            </div>
-                        </div>
-                    </a>
+                        </a>
+                    }
                 </div>
             </div>
             <div class="col-md-3">

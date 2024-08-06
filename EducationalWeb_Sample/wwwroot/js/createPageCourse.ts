@@ -1,5 +1,5 @@
 ﻿namespace Educational {
-    export class CreatePage {
+    export class CreatePageCourse {
         public static UploadImage(): void {
             const content = document.getElementById("image-modal-content")!;
             content.innerHTML = this.UploadControl();
@@ -154,7 +154,7 @@
                 </button>
             </div>
             <div class="modal-footer d-flex justify-content-center">
-                <button type="submit" class="btn btn-sm btn-danger" onclick="Educational.CreatePage.deleteAction(${id})">
+                <button type="submit" class="btn btn-sm btn-danger" onclick="Educational.CreatePageCourse.deleteAction(${id})">
                     Yes
                 </button>
                 <button type="button" href="#" class="btn btn-sm btn-warning" data-bs-dismiss="modal" aria-label="Close">

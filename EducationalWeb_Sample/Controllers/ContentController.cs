@@ -2,12 +2,13 @@
 using BlogSample.Models;
 using Domain;
 using EducationalWeb_Sample.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 
 namespace EducationalWeb_Sample.Controllers
 {
-    
+    [Authorize]
     [Route("Content")]
     public class ContentController : Controller
     {
@@ -74,7 +75,7 @@ namespace EducationalWeb_Sample.Controllers
                 // MoveTempImgFile(blogItem.ImageURL);
 
 
-                return Redirect("/Admin");
+                return Redirect("/CourseAdmin");
             }
             catch (Exception e)
             {
@@ -146,7 +147,7 @@ namespace EducationalWeb_Sample.Controllers
                 await courseApp.InsertData(item);
                 await CreateFileFromBuffer(item.ImageURL);
 
-                return Redirect("/Admin");
+                return Redirect("/CourseAdmin");
             }
             catch (Exception ex)
             {
@@ -194,7 +195,7 @@ namespace EducationalWeb_Sample.Controllers
         }
 
         [HttpPost("UploadToTempFolder")]
-        public async Task<IActionResult> UploadToTempFolder(IFormFile image)
+        public async Task<IActionResult> UploadToTempFolderOld(IFormFile image)
         {
             try
             {
