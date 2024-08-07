@@ -2,6 +2,7 @@ using Application;
 using EducationalWeb_Sample;
 using Infrastructure.DataAccessLayer;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +22,29 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     options.SlidingExpiration = true;
     options.LoginPath = "/user";
     options.LogoutPath = "/user/logout";
+});
+
+static string GetClaimType(string name)
+{
+    string n = $"{ClaimTypes.AuthorizationDecision}/{name}";
+    return n;
+}
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("RequireAdminRole", policy => policy.RequireRole("BlogAdmin", "CourseAdmin"));
+    options.AddPolicy("CanReadBlog", policy => policy.RequireClaim(GetClaimType("BlogAdmin"), "Read"));
+    options.AddPolicy("CanEditBlog", policy => policy.RequireClaim(GetClaimType("BlogAdmin"), "Edit"));
+    options.AddPolicy("CanCreateBlog", policy => policy.RequireClaim(GetClaimType("BlogAdmin"), "Create"));
+    options.AddPolicy("CanDeleteBlog", policy => policy.RequireClaim(GetClaimType("BlogAdmin"), "Delete"));
+    options.AddPolicy("CanEditOrCreateBlog", policy => policy.RequireClaim(GetClaimType("BlogAdmin"), "Create", "Edit"));
+
+    options.AddPolicy("CanReadCourse", policy => policy.RequireClaim(GetClaimType("CourseAdmin"), "Read"));
+    options.AddPolicy("CanEditCourse", policy => policy.RequireClaim(GetClaimType("CourseAdmin"), "Edit"));
+    options.AddPolicy("CanCreateCourse", policy => policy.RequireClaim(GetClaimType("CourseAdmin"), "Create"));
+    options.AddPolicy("CanDeleteCourse", policy => policy.RequireClaim(GetClaimType("CourseAdmin"), "Delete"));
+    options.AddPolicy("CanEditOrCreateCourse", policy => policy.RequireClaim(GetClaimType("CourseAdmin"), "Create", "Edit"));
+
 });
 
 

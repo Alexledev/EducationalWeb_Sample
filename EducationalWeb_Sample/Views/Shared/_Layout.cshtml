@@ -52,8 +52,16 @@
                                     Admin
                                 </button>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item nav-link" href="/CourseAdmin">Course</a></li>
-                                    <li><a class="dropdown-item nav-link" href="/BlogAdmin">Blog</a></li>
+                                    @if (this.Context.User.IsInRole("CourseAdmin"))
+                                    {
+                                        <li><a class="dropdown-item nav-link" href="/CourseAdmin">Course</a></li>
+                                    }
+                                   
+                                    @if (this.Context.User.IsInRole("BlogAdmin"))
+                                    {
+                                        <li><a class="dropdown-item nav-link" href="/BlogAdmin">Blog</a></li>
+                                    }
+                                    
                                 </ul>
                             </li>
                         }

@@ -6,10 +6,10 @@
     <div class="container">
         <div class="row mb-3">
             <div class="col">
-                <h2>Manage Courses</h2>
+                <h2>Manage Blogs</h2>
             </div>
             <div class="col text-end">
-                <a class="btn btn-success w-50" href="/blogContent">Add New Blog</a>
+                <a class="btn btn-success w-50" href="/blogAdmin/AddItem">Add New Blog</a>
             </div>
         </div>
         <div class="row">
@@ -42,7 +42,7 @@
                             </p>
                         </div>
                         <div class="col-md-2">
-                            <a class="btn btn-warning w-75" href="/BlogContent/edit/@bmodel.Id">Edit</a>
+                            <a class="btn btn-warning w-75" href="/BlogAdmin/edit/@bmodel.Id">Edit</a>
                         </div>
                         <div class="col-md-2">
                             <a onclick="Educational.CreatePageBlog.delete('@bmodel.Title', @bmodel.Id)" class="btn btn-danger w-75" data-bs-toggle="modal" data-bs-target="#blog_delete">Delete</a>

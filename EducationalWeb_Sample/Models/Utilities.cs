@@ -1,4 +1,6 @@
-﻿namespace BlogSample.Models
+﻿using Microsoft.Extensions.Caching.Memory;
+
+namespace BlogSample.Models
 {
     public static class Utilities
     {
@@ -51,6 +53,40 @@
         private static bool IsEmpty(object value, Type propertyType)
         {
             return value == null || (propertyType == typeof(DateTime) && Convert.ToDateTime(value) == default(DateTime));
+        }
+
+
+        public static async Task CreateFileFromBuffer(string fileName, IMemoryCache memoryCache, bool editing = false)
+        {
+            bool cantGetMemCacheValue = !memoryCache.TryGetValue(fileName, out byte[] imgBytes);
+
+            if (editing == true && cantGetMemCacheValue)
+            {
+                return;
+            }
+
+            if (cantGetMemCacheValue)
+            {
+                throw new ArgumentException($"{fileName} was not found");
+            }
+
+            string to = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/perm/img", fileName);
+
+            using (FileStream file = new FileStream(to, FileMode.Create, System.IO.FileAccess.Write))
+            {
+                await file.WriteAsync(imgBytes, 0, imgBytes.Length);
+            }
+
+            memoryCache.Remove(fileName);
+        }
+        public static void RemovePermImgFile(string fileName)
+        {
+            string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/perm/img", fileName);
+
+            if (System.IO.File.Exists(path))
+            {
+                System.IO.File.Delete(path);
+            }
         }
     }
 }

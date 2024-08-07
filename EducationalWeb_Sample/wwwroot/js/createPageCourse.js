@@ -52,7 +52,7 @@ var Educational;
         static upload(file) {
             var fd = new FormData();
             fd.append('image', file);
-            fetch('/Content/Upload', {
+            fetch('/CourseAdmin/Upload', {
                 method: 'POST',
                 //headers: {
                 //    // Content-Type may need to be completely **omitted**
@@ -111,7 +111,7 @@ var Educational;
             document.getElementById("course_delete_data").innerHTML = this.deleteControl(name, id);
         }
         static deleteAction(id) {
-            this.deleteItem(`/content/delete/${id}`).then(data => {
+            this.deleteItem(`/courseAdmin/delete/${id}`).then(data => {
                 this.updateDeleteData(id);
             });
         }

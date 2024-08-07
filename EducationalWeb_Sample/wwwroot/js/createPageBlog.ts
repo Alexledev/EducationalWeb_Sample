@@ -57,7 +57,7 @@
             var fd = new FormData();
             fd.append('image', file);
 
-            fetch('/Content/Upload', { // Your POST endpoint
+            fetch('/BlogAdmin/Upload', { // Your POST endpoint
                 method: 'POST',
                 //headers: {
                 //    // Content-Type may need to be completely **omitted**
@@ -133,7 +133,7 @@
         }
 
         public static deleteAction(id: number) {
-            this.deleteItem(`/blogContent/delete/${id}`).then(data => {
+            this.deleteItem(`/blogAdmin/delete/${id}`).then(data => {
                 this.updateDeleteData(id);
             });
         }

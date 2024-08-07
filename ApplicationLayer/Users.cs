@@ -14,11 +14,13 @@ namespace Application
 
         }
 
-        public async Task<bool> Login(UserItem newUser)
+        public async Task<UserItem?> Login(UserItem newUser)
         {
             List<UserItem> tableResult = await this.GetItemsByColumn("userName", newUser.UserName);
 
-            return tableResult?.Any((t) => t.Password == newUser.Password) == true;
+            return tableResult?.SingleOrDefault((t) => t.Password == newUser.Password);
         }
+
+        
     }
 }
