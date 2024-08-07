@@ -31,7 +31,8 @@ namespace EducationalWeb_Sample.Controllers
 
             IEnumerable<CourseModel> courseModels = allCourses.Select((e) => Utilities.CreateObjectBasedOn<CourseItem, CourseModel>(e));
 
-            ViewBag.pages = Convert.ToInt32(MathF.Ceiling(totalCourseCount / CoursesPerPage));
+            var ceil = MathF.Ceiling((float)totalCourseCount / (float)CoursesPerPage);
+            ViewBag.pages = Convert.ToInt32(ceil);
             ViewBag.totalCourseCount = totalCourseCount;
 
             return courseModels;
@@ -41,7 +42,9 @@ namespace EducationalWeb_Sample.Controllers
         public async Task<IActionResult> Paging(int page)
         {
             int offset = (page-1) * CoursesPerPage;
-                        
+            ViewBag.currentPage = page;
+
+
             return View("Index", await GetData(offset));
         }
 

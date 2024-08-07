@@ -5,11 +5,10 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddMySQLConnection();
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-
-ConnectionStringManager.ConnectionString = builder.Configuration.GetConnectionString("DefaultConnection")!;
-
 builder.Services.AddSingleton<Courses>();
 builder.Services.AddSingleton<Blogs>();
 builder.Services.AddSingleton<Users>();

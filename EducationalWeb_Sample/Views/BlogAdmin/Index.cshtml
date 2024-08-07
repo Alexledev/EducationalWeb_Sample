@@ -51,6 +51,15 @@
                     </div>
                 </div>
             }
+
+            @{
+                await Html.RenderPartialAsync("~/Views/Shared/Pager.cshtml", new ViewDataDictionary(ViewData)
+                {
+                    {"Action", "blogAdmin"},
+                    {"PageCount", ViewBag.pages},
+                    {"CurrentPageNumber", ViewBag.currentPage}
+                });
+            }
         </div>
     </div>
 </section>

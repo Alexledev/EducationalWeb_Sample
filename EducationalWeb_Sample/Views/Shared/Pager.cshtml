@@ -1,0 +1,35 @@
+﻿@{
+
+    string action = Convert.ToString(ViewData["Action"]);
+    int pages = Convert.ToInt32(ViewData["PageCount"]);
+
+    int currentPage = ViewData["CurrentPageNumber"] != null ? Convert.ToInt32(ViewData["CurrentPageNumber"]) : 1;
+
+    // string url = Context.Request.Path.ToUriComponent(); 
+
+    // if (!string.IsNullOrEmpty(url) && int.TryParse(url.Split('/').Last(), out int _currentPage))
+    // {
+    //     currentPage = _currentPage;
+    // }
+}
+
+<div class="list-group-item text-bg-light fw-bold d-flex justify-content-center">
+    <nav aria-label="Page navigation example " class="paging-bar">
+        <ul class="pagination">
+            @if (currentPage-1 >= 1)
+            {
+                <li class="page-item"><a class="page-link" href="/@action/page/@(currentPage-1)">Previous</a></li>                
+            }
+
+            @for (int i = 1; i <= pages; i++)
+            {
+                <li class="page-item"><a class="page-link @(currentPage == i ? "active" : "")" href="/@action/page/@i">@i</a></li>
+            }
+
+            @if (currentPage + 1 <= pages)
+            {
+                <li class="page-item"><a class="page-link" href="/@action/page/@(currentPage+1)">Next</a></li>
+            }
+        </ul>
+    </nav>
+</div>
