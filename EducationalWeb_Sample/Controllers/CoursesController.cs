@@ -66,13 +66,34 @@ namespace EducationalWeb_Sample.Controllers
         }
 
         [HttpGet("courseByTopic")]
-        public async Task<IEnumerable< dynamic>> GetCount()
+        public async Task<IEnumerable<dynamic>> GetTopicCount()
         {
             var courseTopicPairs = Utilities.GetCourseTopics().Select(t => { return new KeyValuePair<string, object>("Topic", t); });
 
             var topicCounts = await courseApp.GetCount(courseTopicPairs);
 
             return topicCounts.Select(tp => { return new { Key = tp.Key, Value = tp.Value }; });
+        }
+
+        [HttpGet("courseByCategory")]
+        public async Task<IEnumerable<dynamic>> GetCategoryCount()
+        {
+            var data = await courseApp.GetCount(new List<KeyValuePair<string, (string compOperator, object value)>>()
+            {
+                new KeyValuePair<string, (string compOperator, object value)>("Price", (">", 0)),
+                new KeyValuePair<string, (string compOperator, object value)>("Price", ("=", 0))
+            });
+
+            var Premium = data.SingleOrDefault((item) => (string)item.Key == "> 0").Value;
+            var Free = data.SingleOrDefault((item) => (string)item.Key == "= 0").Value;
+
+            List<dynamic> output = new()
+            {
+                new { key = "Premium Courses", value = Premium },
+                new { key = "Free Courses", value = Free }
+            };
+
+            return output;
         }
     }
 }

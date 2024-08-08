@@ -58,9 +58,16 @@ namespace ApplicationTest
                 new KeyValuePair<string, object>("Topic", "Technology"),
                 new KeyValuePair < string, object >("Topic", "Programming")
             }).GetAwaiter().GetResult();
-
-
         }
 
+        [TestMethod]
+        public void TestCountCondition()
+        {
+            var data = courseApp.GetCount(new List<KeyValuePair<string, (string compOperator, object value)>>()
+            {
+                new KeyValuePair<string, (string compOperator, object value)>("Price", (">", 0)),
+                new KeyValuePair <string, (string compOperator, object value)>("Price", ("=", 0))
+            }).GetAwaiter().GetResult();
+        }
     }
 }

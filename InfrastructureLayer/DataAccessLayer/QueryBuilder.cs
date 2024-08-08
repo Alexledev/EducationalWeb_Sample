@@ -89,6 +89,13 @@ namespace Infrastructure.DataAccessLayer
             return this;
         }
 
+        public QueryBuilder Where(string columnName, string compOperator, object columnValue)
+        {
+            queryString.Append($"WHERE {columnName} {compOperator} @{columnName} ");
+            WhereConditionColVal = new KeyValuePair<string, object?>(columnName, $"{compOperator} {columnValue}");
+            return this;
+        }
+
         public static QueryBuilder FullTextSearch(string tableName, string columnName, string searchText, int offset = 0, int count = 20)
         {
             //StringBuilder orderBuilder = new StringBuilder();

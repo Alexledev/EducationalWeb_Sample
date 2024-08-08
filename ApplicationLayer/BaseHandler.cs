@@ -56,6 +56,22 @@ namespace Application
             return await dataHandler.GetCount(queries);
         }
 
+        public async Task<IDictionary<object, object>> GetCount(IEnumerable<KeyValuePair<string, (string compOperator, object value)>> columnAndValue)
+        {
+            List<IQuery> queries = new List<IQuery>();
+
+            foreach (KeyValuePair<string, (string compOperator, object value)> cav in columnAndValue)
+            {
+                QueryBuilder queryScalarBuilder = new();
+
+                queryScalarBuilder.Select($"COUNT({cav.Key})").From(this.TableName).Where(cav.Key, cav.Value.compOperator, cav.Value.value);
+
+                queries.Add(queryScalarBuilder);
+            }
+
+            return await dataHandler.GetCount(queries);
+        }
+
 
         public Task<List<T>> GetDataCollectionOrdered(Dictionary<string, SortOrders> order, int offset = 0, int count = 20, IEnumerable<string> outputColumn = null)
         {
