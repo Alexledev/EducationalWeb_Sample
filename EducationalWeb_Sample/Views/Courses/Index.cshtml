@@ -1,9 +1,6 @@
 ﻿@model IEnumerable<CourseModel>
 @{
     CourseModel firstItem = Model.FirstOrDefault()!;
-
-    
-
 }
 
 <header class="courses-header py-5 border-bottom">
@@ -67,18 +64,11 @@
                     <div class="list-group-item text-bg-light fw-bold">
                         Course by Topics
                     </div>
-                    <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
-                        Coding
-                        <span class="badge text-bg-warning rounded-pill">3</span>
-                    </a>
-                    <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
-                        Programming
-                        <span class="badge text-bg-warning rounded-pill">3</span>
-                    </a>
-                    <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
-                        Design
-                        <span class="badge text-bg-warning rounded-pill">3</span>
-                    </a>
+                    <div id="courseTopics" class="text-center">
+                        <div class="spinner-border spinner-border-sm" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>                            
                 </div>
             </div>
             <div class="col-md-9">
@@ -129,3 +119,5 @@
         </div>
     </div>
 </section>
+
+<script src="~/js/courses.js"></script>

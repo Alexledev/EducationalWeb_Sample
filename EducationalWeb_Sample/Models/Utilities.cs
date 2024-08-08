@@ -88,5 +88,10 @@ namespace BlogSample.Models
                 System.IO.File.Delete(path);
             }
         }
+
+        public static IEnumerable<string> GetCourseTopics() {
+
+            return ["Technology", "Coding", "Programming", "Design"];
+        }
     }
 }

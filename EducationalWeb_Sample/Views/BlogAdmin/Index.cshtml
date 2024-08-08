@@ -9,7 +9,14 @@
                 <h2>Manage Blogs</h2>
             </div>
             <div class="col text-end">
-                <a class="btn btn-success w-50" href="/blogAdmin/AddItem">Add New Blog</a>
+                @if (this.Context.User.HasClaim(Authen.GetClaimType("BlogAdmin"), "Create"))
+                {
+                    <a class="btn btn-success w-50" href="/blogAdmin/AddItem">Add New Blog</a>
+                }
+                else
+                {
+                    <a class="btn btn-success w-50 disabled" href="#" aria-disabled="true">Add New Blog</a>
+                }
             </div>
         </div>
         <div class="row">
@@ -42,10 +49,25 @@
                             </p>
                         </div>
                         <div class="col-md-2">
-                            <a class="btn btn-warning w-75" href="/BlogAdmin/edit/@bmodel.Id">Edit</a>
+                            @if (this.Context.User.HasClaim(Authen.GetClaimType("BlogAdmin"), "Edit"))
+                            {
+                                <a class="btn btn-warning w-75" href="/BlogAdmin/edit/@bmodel.Id">Edit</a>
+                            }
+                            else
+                            {
+                                <a class="btn btn-warning w-75 disabled" href="#" aria-disabled="true">Edit</a>
+                            }
                         </div>
                         <div class="col-md-2">
-                            <a onclick="Educational.CreatePageBlog.delete('@bmodel.Title', @bmodel.Id)" class="btn btn-danger w-75" data-bs-toggle="modal" data-bs-target="#blog_delete">Delete</a>
+                            @if (this.Context.User.HasClaim(Authen.GetClaimType("BlogAdmin"), "Delete"))
+                            {
+                                <a onclick="Educational.CreatePageBlog.delete('@bmodel.Title', @bmodel.Id)" class="btn btn-danger w-75" data-bs-toggle="modal" data-bs-target="#blog_delete">Delete</a>
+                            }
+                            else
+                            {
+                                <a class="btn btn-danger w-75 disabled" href="#" aria-disabled="true">Delete</a>
+                            }
+                            
                         </div>
 
                     </div>

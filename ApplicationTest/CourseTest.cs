@@ -50,5 +50,17 @@ namespace ApplicationTest
             courseApp.DeleteData("id", 3).GetAwaiter().GetResult();
         }
 
+        [TestMethod]
+        public void TestCount()
+        {
+            var data = courseApp.GetCount(new List<KeyValuePair<string, object>>()
+            {
+                new KeyValuePair<string, object>("Topic", "Technology"),
+                new KeyValuePair < string, object >("Topic", "Programming")
+            }).GetAwaiter().GetResult();
+
+
+        }
+
     }
 }

@@ -2,6 +2,7 @@
 using BlogSample.Models;
 using Domain;
 using EducationalWeb_Sample.Models;
+using Google.Protobuf.WellKnownTypes;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EducationalWeb_Sample.Controllers
@@ -33,7 +34,7 @@ namespace EducationalWeb_Sample.Controllers
 
             var ceil = MathF.Ceiling((float)totalCourseCount / (float)CoursesPerPage);
             ViewBag.pages = Convert.ToInt32(ceil);
-            ViewBag.totalCourseCount = totalCourseCount;
+            ViewBag.totalCourseCount = totalCourseCount;  
 
             return courseModels;
         }
@@ -62,6 +63,16 @@ namespace EducationalWeb_Sample.Controllers
             }
 
             return View("Index", results);
+        }
+
+        [HttpGet("courseByTopic")]
+        public async Task<IEnumerable< dynamic>> GetCount()
+        {
+            var courseTopicPairs = Utilities.GetCourseTopics().Select(t => { return new KeyValuePair<string, object>("Topic", t); });
+
+            var topicCounts = await courseApp.GetCount(courseTopicPairs);
+
+            return topicCounts.Select(tp => { return new { Key = tp.Key, Value = tp.Value }; });
         }
     }
 }

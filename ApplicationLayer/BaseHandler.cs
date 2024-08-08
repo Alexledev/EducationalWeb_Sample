@@ -1,4 +1,5 @@
-﻿using Infrastructure.DataAccessLayer;
+﻿using Google.Protobuf.WellKnownTypes;
+using Infrastructure.DataAccessLayer;
 using Mysqlx.Crud;
 using System;
 using System.Collections.Generic;
@@ -37,6 +38,22 @@ namespace Application
             queryScalarBuilder.Select("COUNT(*)").From(this.TableName);
 
             return dataHandler.GetCollectionDataWithCount(queryDataBuilder, queryScalarBuilder);
+        }
+
+        public async Task<IDictionary<object, object>> GetCount(IEnumerable<KeyValuePair<string, object>> columnAndValue)
+        {        
+            List<IQuery> queries = new List<IQuery>();
+
+            foreach (KeyValuePair<string, object> cav in columnAndValue)
+            {
+                QueryBuilder queryScalarBuilder = new();
+
+                queryScalarBuilder.Select($"COUNT({cav.Key})").From(this.TableName).Where(cav.Key, cav.Value);
+
+                queries.Add(queryScalarBuilder);
+            }           
+
+            return await dataHandler.GetCount(queries);
         }
 
 

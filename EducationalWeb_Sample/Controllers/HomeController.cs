@@ -19,8 +19,8 @@ namespace EducationalWeb_Sample.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            IEnumerable<CourseItem> allCourses = await courseApp.GetDataCollection();
-
+            (IEnumerable<CourseItem> allCourses, long count) = await courseApp.GetCollectionDataWithCount(count: 5);
+            ViewBag.CourseCount = count;
             IEnumerable<CourseModel> courseModels = allCourses.Select((e) => Utilities.CreateObjectBasedOn<CourseItem, CourseModel>(e));
 
             return View(courseModels);

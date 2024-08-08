@@ -1,5 +1,6 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -68,7 +69,8 @@ namespace Infrastructure.DataAccessLayer
 
             return dataCollection;
         }
-
+      
+        
         public async Task<(List<T> items, Int64 totalItemCount)> GetCollectionDataWithCount(IQuery queryData, IQuery scalarQuery)
         {
             List<T> dataCollection = new List<T>();
@@ -94,10 +96,11 @@ namespace Infrastructure.DataAccessLayer
             Int64 totalRowCount = 0;
 
             using (MySqlCommand cmd = new MySqlCommand(scalarQuery.QueryString, connection))
-            {
-                if (!string.IsNullOrEmpty(queryData.WhereConditionColVal.Key))
+            {               
+
+                if (!string.IsNullOrEmpty(scalarQuery.WhereConditionColVal.Key))
                 {
-                    cmd.Parameters.AddWithValue($"@{queryData.WhereConditionColVal.Key}", queryData.WhereConditionColVal.Value);
+                    cmd.Parameters.AddWithValue($"@{scalarQuery.WhereConditionColVal.Key}", scalarQuery.WhereConditionColVal.Value);
                 }
                 
                 var rowCount = await cmd.ExecuteScalarAsync();
@@ -109,6 +112,32 @@ namespace Infrastructure.DataAccessLayer
             return (dataCollection, totalRowCount);
         }
 
+        public async Task<IDictionary<object, object>> GetCount(IEnumerable<IQuery> queryCollection)
+        {
+            Dictionary<object, object> dataCollection = new();
+
+            await connection.OpenAsync();           
+
+            foreach (var scalarQuery in queryCollection)
+            {
+                using (MySqlCommand cmd = new MySqlCommand(scalarQuery.QueryString, connection))
+                {                   
+
+                    if (!string.IsNullOrEmpty(scalarQuery.WhereConditionColVal.Key))
+                    {
+                        cmd.Parameters.AddWithValue($"@{scalarQuery.WhereConditionColVal.Key}", scalarQuery.WhereConditionColVal.Value);
+                    }
+
+                    var rowCount = await cmd.ExecuteScalarAsync();
+
+                    dataCollection.Add(scalarQuery.WhereConditionColVal.Value!, rowCount!);
+                }
+            }
+
+            await connection.CloseAsync();
+
+            return dataCollection;
+        }
 
         public async Task InsertData<T>(T entity) where T : class, new()
         {

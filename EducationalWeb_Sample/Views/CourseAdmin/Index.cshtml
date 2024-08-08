@@ -9,7 +9,14 @@
                 <h2>Manage Courses</h2>
             </div>
             <div class="col text-end">
-                <a class="btn btn-success w-50" href="/CourseAdmin/AddItem">Add New Course</a>
+                @if (this.Context.User.HasClaim(Authen.GetClaimType("CourseAdmin"), "Create"))
+                {
+                    <a class="btn btn-success w-50" href="/CourseAdmin/AddItem">Add New Course</a>
+                }
+                else
+                {
+                    <a class="btn btn-success w-50 disabled" href="#" aria-disabled="true">Add New Course</a>
+                }
             </div>
         </div>
         <div class="row">
@@ -38,10 +45,26 @@
                             </p>
                         </div>
                         <div class="col-md-2">
-                            <a class="btn btn-warning w-75" href="/CourseAdmin/edit/@cmodel.Id">Edit</a>
+                            @if (this.Context.User.HasClaim(Authen.GetClaimType("CourseAdmin"), "Edit"))
+                            {
+                                <a class="btn btn-warning w-75" href="/CourseAdmin/edit/@cmodel.Id">Edit</a>
+                            }
+                            else
+                            {
+                                <a class="btn btn-warning w-75 disabled" href="#" aria-disabled="true">Edit</a>
+                            }
+                             
                         </div>
                         <div class="col-md-2">
-                            <a onclick="Educational.CreatePageCourse.delete('@cmodel.Title', @cmodel.Id)" class="btn btn-danger w-75" data-bs-toggle="modal" data-bs-target="#course_delete">Delete</a>
+                            @if (this.Context.User.HasClaim(Authen.GetClaimType("CourseAdmin"), "Delete"))
+                            {
+                                <a onclick="Educational.CreatePageCourse.delete('@cmodel.Title', @cmodel.Id)" class="btn btn-danger w-75" data-bs-toggle="modal" data-bs-target="#course_delete">Delete</a>
+                            }
+                            else
+                            {
+                                <a class="btn btn-danger w-75 disabled" href="#" aria-disabled="true">Delete</a>
+                            }
+                           
                         </div>
                     </div>
                 </div>
